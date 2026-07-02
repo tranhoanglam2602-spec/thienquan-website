@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiên Quân CFO Advisory — Tư vấn CFO cho doanh nghiệp Việt Nam</title>
+<meta name="description" content="Thiên Quân CFO Advisory — Tư vấn CFO chuyên biệt cho SME Việt Nam. Dòng tiền, Working Capital, Cơ cấu nợ, Cost Control.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── TOKENS ─────────────────────────────── */
+  :root {
+    --navy:       #152B52;
+    --navy-mid:   #1E3A6E;
+    --navy-lite:  #1E3A6E;
+    --gold:       #B8893A;
+    --gold-lite:  #D4A855;
+    --gold-dim:   #8A6E2A;
+    --gold-bg:    #FBF5E9;
+    --white:      #FFFFFF;
+    --off:        #F7F8FA;
+    --off2:       #EFF1F5;
+    --gray-1:     #F0F2F6;
+    --gray-2:     #D8DCE6;
+    --gray-3:     #8890A4;
+    --gray-4:     #3A3F4D;
+    --text:       #1A1F2E;
+    --text-light: #5A6070;
+    --accent:     #1E3A6E;
+    --serif:      'Playfair Display', Georgia, serif;
+    --sans:       'Inter', system-ui, sans-serif;
+    --radius:     6px;
+    --radius-lg:  14px;
+    --max:        1120px;
+    --ease:       cubic-bezier(.4,0,.2,1);
+    --shadow-sm:  0 1px 4px rgba(13,31,60,.07);
+    --shadow-md:  0 4px 20px rgba(13,31,60,.10);
+    --shadow-lg:  0 8px 40px rgba(13,31,60,.13);
+  }
+
+  /* ── RESET ──────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--sans); color: var(--text); background: var(--white); line-height: 1.6; }
+  img  { display: block; max-width: 100%; }
+  a    { text-decoration: none; color: inherit; }
+  ul   { list-style: none; }
+
+  /* ── NAV ────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gray-2);
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 64px;
+  }
+  .nav-logo { display: flex; align-items: baseline; gap: .5rem; }
+  .nav-logo span:first-child { font-family: var(--serif); font-size: 1.15rem; color: var(--navy); letter-spacing: .02em; }
+  .nav-logo span:last-child  { font-size: .75rem; color: var(--gray-3); font-weight: 400; letter-spacing: .06em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: .82rem; font-weight: 500; color: var(--gray-3); letter-spacing: .04em; text-transform: uppercase; transition: color .2s; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-cta {
+    font-size: .78rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    padding: .5rem 1.25rem; background: var(--navy); color: var(--white);
+    border-radius: var(--radius); transition: all .2s var(--ease);
+  }
+  .nav-cta:hover { background: var(--navy-lite); }
+
+  /* ── HERO ───────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--off) 0%, var(--white) 60%, var(--gold-bg) 100%);
+    display: flex; align-items: center;
+    padding: 100px 2rem 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-decor {
+    position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,137,58,.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: var(--max); margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .hero-eyebrow {
+    font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--gold); display: block; }
+  .hero-h1 {
+    font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--navy); line-height: 1.18; margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+  .hero-h1 em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    font-size: 1rem; color: var(--text-light); line-height: 1.78;
+    margin-bottom: 2.5rem; font-weight: 400; max-width: 440px;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    padding: .85rem 1.8rem; background: var(--navy); color: var(--white);
+    font-size: .85rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    border-radius: var(--radius); transition: all .2s var(--ease);
+    border: 2px solid var(--navy); box-shadow: var(--shadow-md);
+  }
+  .btn-primary:hover { background: var(--navy-lite); border-color: var(--navy-lite); }
+  .btn-secondary {
+    padding: .85rem 1.8rem; color: var(--navy);
+    font-size: .85rem; font-weight: 500; letter-spacing: .04em;
+    border-radius: var(--radius); border: 2px solid var(--gray-2);
+    transition: all .2s var(--ease);
+  }
+  .btn-secondary:hover { border-color: var(--navy); }
+
+  /* ── SCORE CARD ─────────────────────────── */
+  .score-card {
+    background: var(--white);
+    border: 1px solid var(--gray-2);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg);
+  }
+  .score-label {
+    font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-3); margin-bottom: 1.5rem;
+  }
+  .score-metrics { display: flex; flex-direction: column; gap: 1.25rem; }
+  .metric { display: flex; flex-direction: column; gap: .35rem; }
+  .metric-top { display: flex; justify-content: space-between; align-items: center; }
+  .metric-name { font-size: .8rem; color: var(--text-light); font-weight: 400; }
+  .metric-val  { font-size: .88rem; font-weight: 600; }
+  .metric-val.red    { color: #DC2626; }
+  .metric-val.amber  { color: #D97706; }
+  .metric-val.green  { color: #059669; }
+  .metric-bar { height: 4px; background: var(--gray-1); border-radius: 2px; overflow: hidden; }
+  .metric-fill { height: 100%; border-radius: 2px; transition: width 1.4s var(--ease); width: 0; }
+  .metric-fill.red   { background: #DC2626; }
+  .metric-fill.amber { background: #D97706; }
+  .metric-fill.green { background: #059669; }
+  .score-divider { height: 1px; background: var(--gray-1); margin: 1.25rem 0; }
+  .score-overall { display: flex; align-items: center; justify-content: space-between; }
+  .score-overall-label { font-size: .78rem; color: var(--gray-3); }
+  .score-number {
+    font-family: var(--serif); font-size: 2.6rem; color: var(--navy);
+    font-weight: 700; line-height: 1; letter-spacing: -.02em;
+  }
+  .score-note { font-size: .68rem; color: var(--gray-3); margin-top: .5rem; text-align: right; }
+  .score-tag {
+    display: inline-block; margin-top: 1rem;
+    font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    padding: .3rem .8rem; border-radius: 999px;
+    background: rgba(220,38,38,.08); color: #DC2626; border: 1px solid rgba(220,38,38,.2);
+  }
+
+  /* ── PAIN ───────────────────────────────── */
+  #pain { background: var(--off); padding: 96px 2rem; }
+  .pain-inner { max-width: var(--max); margin: 0 auto; }
+  .section-eyebrow {
+    font-size: .7rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: .75rem;
+  }
+  .section-h2 {
+    font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.3rem);
+    color: var(--navy); line-height: 1.22; margin-bottom: 1rem;
+  }
+  .section-lead { font-size: 1rem; color: var(--text-light); max-width: 560px; line-height: 1.78; margin-bottom: 3rem; }
+  .pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .pain-item {
+    background: var(--white); border: 1px solid var(--gray-2);
+    border-radius: var(--radius-lg); padding: 1.75rem;
+    border-left: 3px solid var(--gold);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .pain-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .pain-q { font-size: .95rem; font-weight: 600; color: var(--navy); margin-bottom: .5rem; }
+  .pain-a { font-size: .875rem; color: var(--text-light); line-height: 1.68; }
+
+  /* ── SERVICES ───────────────────────────── */
+  #services { padding: 96px 2rem; background: var(--white); }
+  .services-inner { max-width: var(--max); margin: 0 auto; }
+  .services-header { margin-bottom: 3.5rem; }
+  .services-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .svc-card {
+    border: 1px solid var(--gray-2); border-radius: var(--radius-lg);
+    overflow: hidden; transition: box-shadow .25s var(--ease);
+    background: var(--white);
+  }
+  .svc-card:hover { box-shadow: var(--shadow-lg); }
+  .svc-card.flagship { border-color: var(--gold); }
+
+  .svc-head {
+    display: grid; grid-template-columns: 72px 1fr auto;
+    align-items: center; gap: 1.5rem;
+    padding: 1.5rem 2rem; background: var(--navy);
+    cursor: pointer;
+  }
+  .svc-code {
+    font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold); background: rgba(184,137,58,.15);
+    border: 1px solid rgba(184,137,58,.3); border-radius: var(--radius);
+    padding: .35rem .65rem; text-align: center;
+  }
+  .svc-name  { font-size: 1.05rem; font-weight: 600; color: var(--white); }
+  .svc-vn    { font-size: .82rem; color: rgba(255,255,255,.55); margin-top: .15rem; }
+  .svc-price {
+    font-family: var(--serif); font-size: 1.3rem; color: var(--gold);
+    font-weight: 700; white-space: nowrap; text-align: right;
+  }
+  .svc-price small { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 400; color: rgba(255,255,255,.4); letter-spacing: .06em; text-transform: uppercase; }
+  .flagship-badge {
+    font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--navy); background: var(--gold); padding: .25rem .6rem;
+    border-radius: 999px; margin-left: .6rem; vertical-align: middle;
+  }
+  .svc-body {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; border-top: 1px solid var(--gray-1);
+  }
+  .svc-for {
+    padding: 1.5rem 2rem; border-right: 1px solid var(--gray-1);
+    background: var(--off);
+  }
+  .svc-for-label { font-size: .68rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: .5rem; }
+  .svc-for-text  { font-size: .88rem; color: var(--text-light); line-height: 1.65; font-style: italic; }
+  .svc-items { padding: 1.5rem 2rem; background: var(--white); }
+  .svc-items-label { font-size: .68rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: .75rem; }
+  .svc-items ul { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem .5rem; }
+  .svc-items li {
+    font-size: .82rem; color: var(--gray-4); padding-left: 1rem;
+    position: relative; line-height: 1.5;
+  }
+  .svc-items li::before { content: '·'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+  .svc-foot {
+    padding: .85rem 2rem; background: var(--gray-1);
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--gray-2);
+  }
+  .svc-format { font-size: .78rem; color: var(--gray-3); }
+  .svc-note   { font-size: .75rem; color: var(--gold-dim); font-style: italic; }
+
+  /* ── EARLY BIRD ─────────────────────────── */
+  .early-bird {
+    margin: 3.5rem 0 0;
+    background: var(--navy); border-radius: var(--radius-lg);
+    border: 1px solid rgba(184,137,58,.3);
+    padding: 2.25rem 2.5rem;
+    display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
+    box-shadow: var(--shadow-md);
+  }
+  .eb-eyebrow { font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+  .eb-title { font-family: var(--serif); font-size: 1.3rem; color: var(--white); margin-bottom: .5rem; }
+  .eb-text  { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.65; }
+  .eb-prices { display: flex; flex-direction: column; gap: .6rem; align-items: flex-end; }
+  .eb-price-row { text-align: right; }
+  .eb-price-label { font-size: .7rem; color: rgba(255,255,255,.45); letter-spacing: .06em; text-transform: uppercase; }
+  .eb-price-val   { font-family: var(--serif); font-size: 1.5rem; color: var(--gold); font-weight: 700; }
+  .eb-price-old   { font-size: .75rem; color: rgba(255,255,255,.3); text-decoration: line-through; margin-left: .35rem; }
+
+  /* ── PROCESS ────────────────────────────── */
+  #process { padding: 96px 2rem; background: var(--off); }
+  .process-inner { max-width: var(--max); margin: 0 auto; }
+  .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; margin-top: 3rem; position: relative; }
+  .steps::before {
+    content: ''; position: absolute; top: 28px; left: calc(12.5% + 1.5rem); right: calc(12.5% + 1.5rem);
+    height: 1px; background: var(--gray-2); z-index: 0;
+  }
+  .step { position: relative; z-index: 1; }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--white); border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 1.1rem; color: var(--navy); font-weight: 700;
+    margin-bottom: 1.25rem; box-shadow: var(--shadow-sm);
+  }
+  .step-title { font-size: .95rem; font-weight: 600; color: var(--navy); margin-bottom: .5rem; }
+  .step-desc  { font-size: .83rem; color: var(--text-light); line-height: 1.65; }
+
+  /* ── ABOUT ──────────────────────────────── */
+  #about { padding: 96px 2rem; background: var(--white); }
+  .about-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .about-name-block {
+    margin-bottom: 2rem;
+  }
+  .about-name {
+    font-family: var(--serif); font-size: 1.5rem; color: var(--navy); font-weight: 700;
+    margin-bottom: .2rem;
+  }
+  .about-title-line {
+    font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .about-quote {
+    font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--navy); line-height: 1.5; font-weight: 600;
+    padding: 1.25rem 1.5rem; border-left: 3px solid var(--gold);
+    background: var(--gold-bg); border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 2rem;
+  }
+  .about-creds { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 2.5rem; }
+  .cred {
+    display: flex; align-items: flex-start; gap: .75rem;
+    font-size: .875rem; color: var(--text-light); line-height: 1.6;
+  }
+  .cred::before { content: '▸'; color: var(--gold); flex-shrink: 0; margin-top: .05rem; font-size: .75rem; }
+  .about-stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+  .about-stat { text-align: center; padding: 1.25rem 1rem; background: var(--off); border-radius: var(--radius-lg); border: 1px solid var(--gray-2); }
+  .about-stat-num { font-family: var(--serif); font-size: 2rem; color: var(--navy); font-weight: 700; line-height: 1; }
+  .about-stat-label { font-size: .72rem; color: var(--gray-3); margin-top: .35rem; text-transform: uppercase; letter-spacing: .08em; }
+
+  .about-panel {
+    background: var(--off); border: 1px solid var(--gray-2);
+    border-radius: var(--radius-lg); padding: 2.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .about-exp-title { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .exp-tag {
+    font-size: .78rem; padding: .4rem .9rem;
+    border-radius: 999px; border: 1px solid var(--gray-2);
+    color: var(--gray-4); background: var(--white);
+    transition: all .15s;
+  }
+  .exp-tag.highlight {
+    border-color: var(--gold); color: var(--navy);
+    background: var(--gold-bg); font-weight: 500;
+  }
+  .about-industries { margin-top: 2rem; }
+  .about-ind-title { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 1rem; }
+  .ind-list { display: flex; flex-direction: column; gap: .5rem; }
+  .ind-item { font-size: .85rem; color: var(--text-light); display: flex; align-items: center; gap: .65rem; }
+  .ind-item::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  
+  /* Education/credentials panel */
+  .about-edu { margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid var(--gray-2); }
+  .about-edu-item { margin-bottom: .85rem; }
+  .about-edu-label { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-3); margin-bottom: .25rem; }
+  .about-edu-val { font-size: .85rem; color: var(--text-light); line-height: 1.5; }
+  .about-edu-val strong { color: var(--navy); font-weight: 600; }
+
+  /* ── CONTACT ────────────────────────────── */
+  #contact { padding: 96px 2rem; background: var(--off); }
+  .contact-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+  .contact-inner .section-eyebrow { display: flex; justify-content: center; margin-bottom: .75rem; }
+  .contact-inner .section-h2 { margin-bottom: 1rem; }
+  .contact-lead { font-size: 1rem; color: var(--text-light); line-height: 1.75; margin-bottom: 3rem; }
+  .contact-card {
+    background: var(--white); border: 1px solid var(--gray-2);
+    border-radius: var(--radius-lg); padding: 2.5rem;
+    text-align: left; box-shadow: var(--shadow-md);
+  }
+  .contact-free {
+    font-family: var(--serif); font-size: 1.25rem; color: var(--navy);
+    margin-bottom: .5rem; font-weight: 700;
+  }
+  .contact-note { font-size: .85rem; color: var(--text-light); margin-bottom: 2rem; line-height: 1.65; }
+  .contact-rows { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+  .contact-row { display: flex; align-items: center; gap: 1rem; }
+  .contact-icon {
+    width: 40px; height: 40px; border-radius: var(--radius);
+    background: var(--gold-bg); border: 1px solid rgba(184,137,58,.25);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-row-label { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-3); }
+  .contact-row-val   { font-size: .9rem; color: var(--text); font-weight: 500; }
+  .contact-cta {
+    width: 100%; padding: 1rem; background: var(--navy); color: var(--white);
+    font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    border-radius: var(--radius); border: none; cursor: pointer;
+    transition: background .2s var(--ease); box-shadow: var(--shadow-md);
+  }
+  .contact-cta:hover { background: var(--navy-lite); }
+  .contact-limit { font-size: .75rem; color: var(--gray-3); text-align: center; margin-top: 1rem; }
+
+  /* ── FOOTER ─────────────────────────────── */
+  footer {
+    background: var(--navy); padding: 2rem;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .footer-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-brand { font-family: var(--serif); font-size: 1rem; color: var(--gold); }
+  .footer-copy  { font-size: .75rem; color: rgba(255,255,255,.35); }
+
+  /* ── ANIMATIONS ─────────────────────────── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  .fade-up { opacity: 0; animation: fadeUp .6s var(--ease) forwards; }
+  .fade-up.d1 { animation-delay: .1s; }
+  .fade-up.d2 { animation-delay: .25s; }
+  .fade-up.d3 { animation-delay: .4s; }
+  .fade-up.d4 { animation-delay: .55s; }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; animation: none; }
+    .metric-fill { transition: none; }
+  }
+
+  /* ── RESPONSIVE ─────────────────────────── */
+  @media (max-width: 900px) {
+    .hero-inner    { grid-template-columns: 1fr; gap: 3rem; }
+    .score-card    { max-width: 420px; }
+    .pain-grid     { grid-template-columns: 1fr; }
+    .svc-body      { grid-template-columns: 1fr; }
+    .svc-for       { border-right: none; border-bottom: 1px solid var(--gray-1); }
+    .svc-items ul  { grid-template-columns: 1fr; }
+    .about-inner   { grid-template-columns: 1fr; gap: 3rem; }
+    .about-stat-grid { grid-template-columns: repeat(3,1fr); }
+    .steps         { grid-template-columns: repeat(2,1fr); }
+    .steps::before { display: none; }
+    .early-bird    { grid-template-columns: 1fr; }
+    .eb-prices     { align-items: flex-start; flex-direction: row; gap: 2rem; }
+    .nav-links     { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span>Thiên Quân</span>
+      <span>CFO Advisory</span>
+    </div>
+    <div class="nav-links">
+      <a href="#pain">Vấn đề</a>
+      <a href="#services">Dịch vụ</a>
+      <a href="#process">Quy trình</a>
+      <a href="#about">Về chúng tôi</a>
+      <a href="#contact">Liên hệ tư vấn</a>
+    </div>
+    <a href="#contact" class="nav-cta">Liên hệ tư vấn</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-decor"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow fade-up d1">CFO Advisory · Việt Nam</div>
+      <h1 class="hero-h1 fade-up d2">
+        Doanh nghiệp của anh<br>
+        đang thực sự<br>
+        <em>ở đâu?</em>
+      </h1>
+      <p class="hero-sub fade-up d3">Chúng tôi giúp chủ doanh nghiệp SME hiểu rõ tình trạng tài chính thực sự — không phải qua con số kế toán, mà qua góc nhìn CFO.</p>
+      <div class="hero-btns fade-up d4">
+        <a href="#contact" class="btn-primary">Liên hệ tư vấn</a>
+        <a href="#services" class="btn-secondary">Xem dịch vụ</a>
+      </div>
+    </div>
+    <div>
+      <div class="score-card fade-up d3">
+        <div class="score-label">Financial Health Snapshot — Điển hình SME Việt Nam</div>
+        <div class="score-metrics">
+          <div class="metric">
+            <div class="metric-top">
+              <span class="metric-name">Cash Runway</span>
+              <span class="metric-val red">23 ngày</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill red" data-w="18"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <span class="metric-name">Working Capital Ratio</span>
+              <span class="metric-val amber">1.08×</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill amber" data-w="38"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <span class="metric-name">AR Days Outstanding</span>
+              <span class="metric-val red">78 ngày</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill red" data-w="72"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <span class="metric-name">Debt / EBITDA</span>
+              <span class="metric-val red">4.2×</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill red" data-w="82"></div></div>
+          </div>
+          <div class="metric">
+            <div class="metric-top">
+              <span class="metric-name">Gross Margin Trend</span>
+              <span class="metric-val green">↑ ổn định</span>
+            </div>
+            <div class="metric-bar"><div class="metric-fill green" data-w="70"></div></div>
+          </div>
+        </div>
+        <div class="score-divider"></div>
+        <div class="score-overall">
+          <div>
+            <div class="score-overall-label">CFO Health Score</div>
+            <div style="font-size:.75rem;color:var(--gray-3);margin-top:.2rem">Dựa trên 5 chỉ số cốt lõi</div>
+            <div class="score-tag">⚠ Cần chú ý</div>
+          </div>
+          <div>
+            <div class="score-number" id="scoreNum">0</div>
+            <div class="score-note">/ 100</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section id="pain">
+  <div class="pain-inner">
+    <div class="section-eyebrow">Vấn đề thực tế</div>
+    <h2 class="section-h2">Những câu hỏi mà<br>chủ doanh nghiệp hay gặp</h2>
+    <p class="section-lead">Nếu anh từng tự hỏi những câu này — đây là lúc cần một CFO bên cạnh.</p>
+    <div class="pain-grid">
+      <div class="pain-item">
+        <div class="pain-q">Tháng này doanh thu tốt, sao tiền vẫn không có?</div>
+        <div class="pain-a">Doanh thu và dòng tiền là hai thứ khác nhau. Working capital đang "ăn" tiền mặt của anh.</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-q">Tôi có đang vay quá nhiều không?</div>
+        <div class="pain-a">Không có benchmark rõ ràng là nguy hiểm. Chúng tôi phân tích DSCR và cơ cấu nợ cụ thể.</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-q">Dự án BĐS / FDI này có thực sự khả thi về tài chính không?</div>
+        <div class="pain-a">NPV dương chưa đủ — cần sensitivity analysis, cơ cấu vốn đúng và kịch bản downside trước khi cam kết.</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-q">Ngân hàng từ chối — hồ sơ tôi thiếu gì?</div>
+        <div class="pain-a">80% trường hợp là do BCTC không nói được "câu chuyện" mà loan officer cần nghe.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-inner">
+    <div class="services-header">
+      <div class="section-eyebrow">Dịch vụ</div>
+      <h2 class="section-h2">Chúng tôi làm gì cho anh</h2>
+      <p class="section-lead">Bốn dịch vụ thiết kế theo từng nhu cầu — từ giám sát tài chính hàng tháng đến thẩm định dự án BĐS và FDI.</p>
+    </div>
+    <div class="services-grid">
+
+      <!-- S1 -->
+      <div class="svc-card flagship">
+        <div class="svc-head">
+          <div class="svc-code">S1</div>
+          <div class="svc-title-wrap">
+            <div class="svc-name">Monthly CFO Advisory <span class="flagship-badge">Cốt lõi</span></div>
+            <div class="svc-vn">CFO đồng hành hàng tháng</div>
+          </div>
+          <div class="svc-price">Từ 12 tr<small>/ tháng · tùy quy mô</small></div>
+        </div>
+        <div class="svc-body">
+          <div class="svc-for">
+            <div class="svc-for-label">Phù hợp với</div>
+            <div class="svc-for-text">Doanh nghiệp đang vận hành và muốn có người giám sát tài chính liên tục, hỗ trợ quyết định hàng tháng.</div>
+          </div>
+          <div class="svc-items">
+            <div class="svc-items-label">Bao gồm</div>
+            <ul>
+              <li>Review tài chính hàng tháng</li>
+              <li>Dự báo dòng tiền 13 tuần</li>
+              <li>Red flag alerts — cảnh báo sớm</li>
+              <li>2 buổi tư vấn/tháng (60 phút)</li>
+              <li>Hỗ trợ qua Zalo on-demand</li>
+              <li>Monthly CFO report</li>
+            </ul>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <span class="svc-format">Retainer · Tối thiểu 3 tháng</span>
+          <span class="svc-note">Phí tùy quy mô doanh nghiệp — liên hệ để được báo giá</span>
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div class="svc-card">
+        <div class="svc-head">
+          <div class="svc-code">S2</div>
+          <div class="svc-title-wrap">
+            <div class="svc-name">CFO Financial Diagnostic</div>
+            <div class="svc-vn">Chẩn đoán tài chính toàn diện</div>
+          </div>
+          <div class="svc-price">20 tr<small>/ dự án</small></div>
+        </div>
+        <div class="svc-body">
+          <div class="svc-for">
+            <div class="svc-for-label">Phù hợp với</div>
+            <div class="svc-for-text">Doanh nghiệp muốn hiểu rõ tình trạng tài chính thực sự trước khi có bước đi tiếp theo.</div>
+          </div>
+          <div class="svc-items">
+            <div class="svc-items-label">Bao gồm</div>
+            <ul>
+              <li>Phân tích dòng tiền & thanh khoản</li>
+              <li>Đánh giá working capital</li>
+              <li>3–5 rủi ro tài chính ưu tiên</li>
+              <li>Top 3 khuyến nghị hành động</li>
+            </ul>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <span class="svc-format">Dự án một lần · 2–3 tuần</span>
+          <span class="svc-note">Entry point → upsell S1</span>
+        </div>
+      </div>
+
+      <!-- S3 -->
+      <div class="svc-card">
+        <div class="svc-head">
+          <div class="svc-code">S3</div>
+          <div class="svc-title-wrap">
+            <div class="svc-name">Loan Readiness Package</div>
+            <div class="svc-vn">Chuẩn bị hồ sơ vay vốn ngân hàng</div>
+          </div>
+          <div class="svc-price">20 tr<small>/ dự án · cố định</small></div>
+        </div>
+        <div class="svc-body">
+          <div class="svc-for">
+            <div class="svc-for-label">Phù hợp với</div>
+            <div class="svc-for-text">Doanh nghiệp muốn tiếp cận vốn ngân hàng nhưng hồ sơ tài chính chưa đủ mạnh.</div>
+          </div>
+          <div class="svc-items">
+            <div class="svc-items-label">Bao gồm</div>
+            <ul>
+              <li>Phân tích & lộ trình chỉnh lý BCTC</li>
+              <li>Mô hình DSCR — khả năng trả nợ</li>
+              <li>Dự báo dòng tiền 12 tháng cho ngân hàng</li>
+              <li>Financial narrative cho loan officer</li>
+            </ul>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <span class="svc-format">Dự án · 3–4 tuần</span>
+          <span class="svc-note">Cam kết hồ sơ tốt nhất — không cam kết kết quả vay</span>
+        </div>
+      </div>
+
+      <!-- S4 -->
+      <div class="svc-card">
+        <div class="svc-head" style="background:var(--navy-lite)">
+          <div class="svc-code">S4</div>
+          <div class="svc-title-wrap">
+            <div class="svc-name">Feasibility Study <span style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:rgba(184,137,58,.2);border:1px solid rgba(184,137,58,.4);color:var(--gold);padding:.2rem .6rem;border-radius:4px;margin-left:.5rem;vertical-align:middle;">BĐS · FDI</span></div>
+            <div class="svc-vn">Thẩm định tài chính dự án đầu tư</div>
+          </div>
+          <div class="svc-price">30 tr<small>/ dự án · từ</small></div>
+        </div>
+        <div class="svc-body">
+          <div class="svc-for">
+            <div class="svc-for-label">Phù hợp với</div>
+            <div class="svc-for-text">Doanh nghiệp BĐS, FDI hoặc SME đang cân nhắc đầu tư dự án mới — cần đánh giá tài chính độc lập trước khi ra quyết định.</div>
+          </div>
+          <div class="svc-items">
+            <div class="svc-items-label">Bao gồm</div>
+            <ul>
+              <li>Financial modelling — mô hình tài chính dự án</li>
+              <li>NPV / IRR / Payback Period analysis</li>
+              <li>Sensitivity analysis — phân tích độ nhạy</li>
+              <li>Phân tích rủi ro & cơ cấu vốn tối ưu</li>
+              <li>Đánh giá DSCR — khả năng trả nợ dự án</li>
+              <li>Executive summary cho nhà đầu tư / ngân hàng</li>
+            </ul>
+          </div>
+        </div>
+        <div class="svc-foot">
+          <span class="svc-format">Dự án · 3–5 tuần · Tùy quy mô và độ phức tạp</span>
+          <span class="svc-note">Liên hệ để báo giá cụ thể</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-inner">
+    <div class="section-eyebrow">Quy trình</div>
+    <h2 class="section-h2">Chúng tôi làm việc như thế nào</h2>
+    <p class="section-lead">Bốn bước từ lúc nhận dữ liệu đến khi anh có insight và hành động cụ thể.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Nhận BCTC</div>
+        <div class="step-desc">Tiếp nhận báo cáo tài chính và dữ liệu vận hành từ doanh nghiệp.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Phân tích CFO</div>
+        <div class="step-desc">Framework 5 chiều: Cash · Working Capital · Cost · Debt · Performance.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Xác định rủi ro</div>
+        <div class="step-desc">Tìm ra 3–5 điểm rủi ro tài chính ưu tiên cần xử lý ngay.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Đề xuất hành động</div>
+        <div class="step-desc">Khuyến nghị cụ thể, khả thi — không lý thuyết, không chung chung.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div>
+      <div class="section-eyebrow">Về founder</div>
+      <div class="about-name-block">
+        <div class="about-name">Trần Hoàng Lâm</div>
+        <div class="about-title-line">Co-Founder</div>
+      </div>
+      <blockquote class="about-quote">
+        "Tôi giúp doanh nghiệp nhìn thấy những rủi ro tài chính mà họ chưa nhận ra — và biến insight đó thành hành động cụ thể."
+      </blockquote>
+      <div class="about-creds">
+        <div class="cred">18+ năm kinh nghiệm thực chiến trong tài chính doanh nghiệp — từ vai trò Relationship Manager tại ngân hàng trong nước và quốc tế đến Finance Director tại các tập đoàn đa ngành tại Việt Nam</div>
+        <div class="cred">Hiện phụ trách Project Finance, FP&A, Treasury và M&A cho tập đoàn bất động sản và dịch vụ đa quốc gia</div>
+        <div class="cred">Kinh nghiệm dẫn dắt giao dịch: huy động vốn ngân hàng (TCB, VCB, Vietinbank), tái cơ cấu tín dụng, sáp nhập và hợp nhất các công ty con trong tập đoàn</div>
+        <div class="cred">Feasibility Study cho dự án BĐS thương mại và căn hộ — financial modelling, NPV/IRR, sensitivity analysis, cơ cấu vốn tối ưu</div>
+        <div class="cred">Kinh nghiệm tái cơ cấu dòng tiền, xử lý khủng hoảng thanh khoản và đàm phán trực tiếp với ngân hàng và quỹ đầu tư nước ngoài</div>
+        <div class="cred">Tư duy risk-first — phát hiện vấn đề tài chính trước khi nó trở thành khủng hoảng</div>
+      </div>
+      <div class="about-stat-grid">
+        <div class="about-stat">
+          <div class="about-stat-num">18+</div>
+          <div class="about-stat-label">Năm kinh nghiệm</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">6</div>
+          <div class="about-stat-label">Ngành đã làm</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">CFO</div>
+          <div class="about-stat-label">Level judgment</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="about-panel">
+        <div class="about-exp-title">Chuyên môn</div>
+        <div class="exp-tags">
+          <span class="exp-tag highlight">Cash Flow Management</span>
+          <span class="exp-tag highlight">Working Capital</span>
+          <span class="exp-tag highlight">Debt Structure</span>
+          <span class="exp-tag highlight">Feasibility Study</span>
+          <span class="exp-tag highlight">Cost Control</span>
+          <span class="exp-tag">NPV / IRR Analysis</span>
+          <span class="exp-tag">Sensitivity Analysis</span>
+          <span class="exp-tag">13-Week Cash Forecast</span>
+          <span class="exp-tag">Liquidity Risk</span>
+          <span class="exp-tag">Bank Negotiation</span>
+          <span class="exp-tag">Financial Restructuring</span>
+          <span class="exp-tag">DSCR Modelling</span>
+          <span class="exp-tag">M&A / Consolidation</span>
+          <span class="exp-tag">Project Finance</span>
+          <span class="exp-tag">FP&A</span>
+          <span class="exp-tag">AR / AP Optimization</span>
+        </div>
+        <div class="about-industries">
+          <div class="about-ind-title">Ngành đã làm việc</div>
+          <div class="ind-list">
+            <div class="ind-item">Bất động sản — Thương mại & Căn hộ</div>
+            <div class="ind-item">Trading & Phân phối</div>
+            <div class="ind-item">Dịch vụ & FDI</div>
+            <div class="ind-item">Retail</div>
+            <div class="ind-item">Airport</div>
+          </div>
+        </div>
+        <div class="about-edu">
+          <div class="about-edu-item">
+            <div class="about-edu-label">Học vấn</div>
+            <div class="about-edu-val"><strong>MSc Banking & Finance</strong> — CFVG / Paris Dauphine University</div>
+            <div class="about-edu-val" style="margin-top:.2rem"><strong>BBA</strong> — Webster University, USA · GPA 3.85/4.0, Dean's List</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-eyebrow">Liên hệ</div>
+    <h2 class="section-h2">Liên hệ với chúng tôi</h2>
+    <p class="contact-lead">Chúng tôi lắng nghe tình hình doanh nghiệp và đề xuất hướng tiếp cận phù hợp.</p>
+    <div class="contact-card">
+      <div class="contact-free">Đặt lịch trao đổi</div>
+      <div class="contact-note">Chỉ còn <strong style="color:var(--gold)">3 slot</strong> trong quý này. Liên hệ sớm để đặt chỗ.</div>
+      <div class="contact-rows">
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-row-label">Email</div>
+            <div class="contact-row-val">info@thienquanadvisory.vn</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.22 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="contact-row-label">Zalo / Phone</div>
+            <div class="contact-row-val">+84 935 845 009</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div>
+            <div class="contact-row-label">Website</div>
+            <div class="contact-row-val">thienquanadvisory.vn</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://zalo.me/0935845009" class="contact-cta" style="display:block;text-align:center;">
+        Nhắn Zalo ngay — Đặt lịch trao đổi
+      </a>
+      <div class="contact-limit">Chúng tôi chỉ nhận tối đa 3 retainer client mỗi quý để đảm bảo chất lượng</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Thiên Quân CFO Advisory</div>
+    <div class="footer-copy">© 2026 Công ty TNHH MTV Thiên Quân · thienquanadvisory.vn</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.metric-fill').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  }, 600);
+
+  const el = document.getElementById('scoreNum');
+  const target = 47;
+  let current = 0;
+  const step = () => {
+    current = Math.min(current + 2, target);
+    el.textContent = current;
+    if (current < target) requestAnimationFrame(step);
+  };
+  setTimeout(() => requestAnimationFrame(step), 800);
+});
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + e.target.id
+          ? 'var(--navy)' : 'var(--gray-3)';
+      });
+    }
+  });
+}, { threshold: .4 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
